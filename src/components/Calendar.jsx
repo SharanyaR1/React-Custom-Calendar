@@ -11,11 +11,13 @@ import {
   addMonths,
   subMonths,
   isToday,
+  parseISO,
 } from "date-fns";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import CalendarDay from "./CalendarDay";
+import RecurrenceUtils from "../utils/RecurrenceUtils";
 
-const Calendar = ({ events}) => {
+const Calendar = ({events,  onDateClick, onEventClick, onEventDrop}) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const monthStart = startOfMonth(currentMonth);
@@ -58,19 +60,49 @@ const Calendar = ({ events}) => {
     );
   };
 
+  const getEventsForDate = (date) => {
+    const dayEvents = [];
+
+    events.forEach((event) => {
+      const eventDate = parseISO(event.date);
+
+      if (isSameDay(eventDate, date)) {
+        dayEvents.push(event);
+      }
+
+      if (event.recurrence && event.recurrence.type !== "none") {
+        if (RecurrenceUtils.shouldEventOccurOnDate(event, date)) {
+          dayEvents.push({
+            ...event,
+            id: `${event.id}-${format(date, "yyyy-MM-dd")}`,
+            isRecurring: true,
+            originalId: event.id,
+          });
+        }
+      }
+    });
+
+    return dayEvents;
+  };
+
   const renderCalendarDays = () => {
     const days = [];
     let day = startDate;
 
     while (day <= endDate) {
       const currentDay = new Date(day); 
+      const dayEvents = getEventsForDate(currentDay);
 
       days.push(
         <CalendarDay
           key={currentDay.toISOString()}
           date={currentDay}
+          events={dayEvents}
           isCurrentMonth={isSameMonth(currentDay, monthStart)}
           isToday={isToday(currentDay)}
+          onClick={() => onDateClick(currentDay)}
+          onEventClick={onEventClick}
+          onEventDrop={onEventDrop}
         />
       );
       day = addDays(day, 1);
@@ -88,4 +120,4 @@ const Calendar = ({ events}) => {
   );
 };
 
-export default Calendar
+export default Calendar;
