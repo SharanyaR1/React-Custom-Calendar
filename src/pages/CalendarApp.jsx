@@ -143,7 +143,7 @@ function CalendarApp() {
               <span>Back to Home</span>
             </Link>
           </div>
-          <h1>Calendar</h1>
+          <h1></h1>
           <div className="controls">
             <input
               type="text"

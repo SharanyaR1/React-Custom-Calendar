@@ -2,11 +2,11 @@
 .calendar-app {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 15px;
   background-color: white;
   min-height: 100vh;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  
+  border-radius: 20px;
 }
 
 /* Calendar */
@@ -453,16 +453,6 @@
   transform: translateY(0);
 }
 
-.calendar-app-header h1 {
-  color:#6a4190 ;
-  font-size: 2.5rem;
-  font-weight: 600;
-  margin: 0;
-  flex: 1;
-  text-align: center;
-  margin-left: 300px;
-}
-
 .controls {
   display: flex;
   gap: 15px;
@@ -517,11 +507,6 @@
     margin-bottom: 10px;
   }
 
-  .calendar-app-header h1 {
-    font-size: 5rem;
-    text-align: center;
-    order: 2;
-  }
 
   .controls {
     justify-content: center;
@@ -539,9 +524,6 @@
 }
 
 @media (max-width: 480px) {
-  .calendar-app-header h1 {
-    font-size: 1.8rem;
-  }
 
   .controls {
     flex-direction: column;
