@@ -243,7 +243,7 @@ const EventModal = ({
               onChange={handleInputChange}
               required
               placeholder="Enter event title"
-              maxLength={39}
+              maxLength={100}
             />
           </div>
 
