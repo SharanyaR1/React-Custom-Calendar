@@ -89,7 +89,16 @@ const EventModal = ({
 
     const eventDate = parseISO(formData.date);
     const conflictingEvents = existingEvents.filter((event) => {
-      if (editingEvent && event.id === editingEvent.id) return false;
+    if (editingEvent) {
+        // Ignore the event being edited and all its recurring instances
+        if (
+          event.id === editingEvent.id ||
+          (event.originalId && event.originalId === editingEvent.id) ||
+          (editingEvent.originalId && event.id === editingEvent.originalId)
+        ) {
+          return false;
+        }
+      }
 
       const existingEventDate = parseISO(event.date);
       return (
@@ -194,6 +203,18 @@ const EventModal = ({
       onDelete(editingEvent.id);
     }
   };
+
+    useEffect(() => {
+    if (
+      editingEvent &&
+      editingEvent.recurrence &&
+      editingEvent.recurrence.type !== "none" &&
+      editingEvent.originalId
+    ) {
+      alert("Modifications should be done at the start of the recurring event.");
+      onClose();
+    }
+  }, [editingEvent]);
 
   if (!isOpen) return null;
 
