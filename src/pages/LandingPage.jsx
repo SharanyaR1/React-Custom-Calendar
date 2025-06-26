@@ -76,8 +76,6 @@ const LandingPage = () => {
               functionality, recurring events, conflict detection, and
               more!
             </p>
-          </div>
-
           <div className="cta-section">
             <Link to="/calendar" className="cta-button">
               <span className="button-text">
@@ -88,6 +86,9 @@ const LandingPage = () => {
               </div>
             </Link>
           </div>
+          </div>
+
+
         </div>
       </div>
 
