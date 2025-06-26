@@ -26,13 +26,8 @@ const CalendarDay = ({
     });
 
     const handleDateClick = (e) => {
-        // Only trigger date click if we're not clicking on an event
-        if (
-        e.target === e.currentTarget ||
-        e.target.classList.contains("day-number")
-        ) {
+        if (e.target.closest(".event-item")) return;
         onClick();
-        }
     };
 
     const dayClasses = [
